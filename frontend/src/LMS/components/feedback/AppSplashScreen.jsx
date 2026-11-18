@@ -3,21 +3,21 @@ import { ShieldCheck, Sparkles, GraduationCap } from 'lucide-react';
 import LMSLogo from '../branding/LMSLogo';
 
 export default function AppSplashScreen({
-  durationMs = 2600,
+  durationMs = 3800,
   onComplete,
 }) {
-  const [progress, setProgress] = useState(8);
+  const [progress, setProgress] = useState(5);
   const [isFadingOut, setIsFadingOut] = useState(false);
 
-  // Smooth, realistic progress animation over durationMs
+  // Smooth, satisfying progress animation over durationMs (3.8s)
   useEffect(() => {
     const startTime = Date.now();
     const interval = setInterval(() => {
       const elapsed = Date.now() - startTime;
       const t = Math.min(1, elapsed / durationMs);
-      // Ease-out cubic curve for natural, satisfying motion
-      const eased = 1 - Math.pow(1 - t, 3);
-      const pct = Math.min(100, Math.round(8 + eased * 92));
+      // Natural ease-out cubic curve so it starts crisp and lands gently at 100%
+      const eased = 1 - Math.pow(1 - t, 2.5);
+      const pct = Math.min(100, Math.round(5 + eased * 95));
       setProgress(pct);
 
       if (t >= 1) {
@@ -25,19 +25,20 @@ export default function AppSplashScreen({
         setIsFadingOut(true);
         setTimeout(() => {
           if (onComplete) onComplete();
-        }, 280);
+        }, 320);
       }
-    }, 25);
+    }, 30);
 
     return () => clearInterval(interval);
   }, [durationMs, onComplete]);
 
-  // Context-aware micro-status
+  // Dynamic context-aware micro-status through the stages
   const getStatusText = () => {
-    if (progress < 25) return 'Initializing MW Tuition Portal...';
-    if (progress < 50) return 'Loading past papers, model papers & notes...';
-    if (progress < 75) return 'Syncing timed MCQ quiz banks...';
-    if (progress < 92) return 'Preparing your personalized dashboard...';
+    if (progress < 20) return 'Connecting to MW Tuition Network...';
+    if (progress < 40) return 'Loading past papers & model papers...';
+    if (progress < 65) return 'Syncing timed MCQ quiz question banks...';
+    if (progress < 85) return 'Syncing your attendance & term progress...';
+    if (progress < 98) return 'Setting up your personalized dashboard...';
     return 'Welcome back! Launching workspace...';
   };
 

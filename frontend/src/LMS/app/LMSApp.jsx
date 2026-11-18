@@ -5,27 +5,13 @@ import LMSRoutes from './LMSRoutes';
 import AppSplashScreen from '../components/feedback/AppSplashScreen';
 
 export default function LMSApp() {
-  // Show splash screen only ONCE per browser session
-  const [booting, setBooting] = useState(() => {
-    try {
-      return sessionStorage.getItem('lms_splash_seen') !== 'true';
-    } catch {
-      return true;
-    }
-  });
-
-  const handleComplete = () => {
-    try {
-      sessionStorage.setItem('lms_splash_seen', 'true');
-    } catch {}
-    setBooting(false);
-  };
+  const [booting, setBooting] = useState(true);
 
   return (
     <BrowserRouter>
       <LMSProviders>
         {booting ? (
-          <AppSplashScreen durationMs={2600} onComplete={handleComplete} />
+          <AppSplashScreen durationMs={3800} onComplete={() => setBooting(false)} />
         ) : (
           <LMSRoutes />
         )}
