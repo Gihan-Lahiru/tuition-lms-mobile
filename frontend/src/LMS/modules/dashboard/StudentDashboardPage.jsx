@@ -1,11 +1,10 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Award,
   BookOpen,
   Calendar,
   CalendarCheck,
-  Camera,
   CheckCircle2,
   CheckSquare,
   ChevronRight,
@@ -18,8 +17,6 @@ import {
   TrendingUp,
   Video,
 } from 'lucide-react';
-import toast from 'react-hot-toast';
-import apiClient from '../../services/apiClient';
 import { useLMSAuth } from '../../context/LMSAuthContext';
 import { assignmentService } from '../../services/assignmentService';
 import { quizService } from '../../services/quizService';
@@ -34,37 +31,8 @@ import UserAvatar from '../../components/user/UserAvatar';
 import { formatColomboDateTime } from '../../utils/colomboTime';
 
 export default function StudentDashboardPage() {
-  const { user, refreshMe } = useLMSAuth();
-  const fileInputRef = useRef(null);
-  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const { user } = useLMSAuth();
   const [loading, setLoading] = useState(true);
-
-  const handleAvatarUpload = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    if (!file.type.startsWith('image/')) {
-      toast.error('Please choose a valid photo (JPG, PNG, WebP)');
-      return;
-    }
-    const formData = new FormData();
-    formData.append('profilePicture', file);
-    setUploadingAvatar(true);
-    const toastId = toast.loading('Uploading your profile photo...');
-    try {
-      await apiClient.post('/users/profile-picture', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      if (refreshMe) {
-        await refreshMe();
-      }
-      toast.success('Profile photo updated!', { id: toastId });
-    } catch (err) {
-      toast.error(err?.response?.data?.message || 'Could not update photo', { id: toastId });
-    } finally {
-      setUploadingAvatar(false);
-      if (e.target) e.target.value = '';
-    }
-  };
   const [data, setData] = useState({
     assignments: [],
     assignmentSummary: null,
@@ -124,32 +92,18 @@ export default function StudentDashboardPage() {
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 p-5 text-white shadow-sm">
         <div className="relative z-10 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0 flex-1">
-            <div className="relative shrink-0">
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                disabled={uploadingAvatar}
-                className="relative block rounded-full transition-transform hover:scale-105 active:scale-95 cursor-pointer disabled:opacity-60"
-                title="Tap to change your profile picture"
-              >
-                <UserAvatar
-                  user={user}
-                  size="xl"
-                  ring={true}
-                  ringColor="ring-white/50 shadow-md"
-                />
-                <span className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-white text-indigo-700 shadow-md ring-2 ring-indigo-900/40 hover:bg-blue-50 transition">
-                  <Camera className="h-3 w-3" />
-                </span>
-              </button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleAvatarUpload}
+            <Link
+              to="/lms/security"
+              className="relative shrink-0 rounded-full transition-transform hover:scale-105 active:scale-95 block"
+              title="View Profile & Settings"
+            >
+              <UserAvatar
+                user={user}
+                size="xl"
+                ring={true}
+                ringColor="ring-white/50 shadow-md"
               />
-            </div>
+            </Link>
             <div className="min-w-0 flex-1">
               <p className="text-xs font-medium text-blue-100">Welcome back,</p>
               <h2 className="mt-0.5 text-lg sm:text-xl font-extrabold tracking-tight text-white flex items-center gap-1.5">
