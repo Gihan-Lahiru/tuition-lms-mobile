@@ -36,6 +36,7 @@ import {
   AttendanceRecord,
   AttendanceSession,
 } from './database/entities/attendance.entity';
+import { Message } from './database/entities/message.entity';
 
 const ALL_ENTITIES = [
   User,
@@ -48,6 +49,7 @@ const ALL_ENTITIES = [
   Payment,
   Notification,
   Announcement,
+  Message,
   Quiz,
   Question,
   QuizOption,
