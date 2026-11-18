@@ -27,6 +27,7 @@ import AttendanceRing from '../../components/charts/AttendanceRing';
 import StatusBadge from '../../components/feedback/StatusBadge';
 import LoadingSkeleton from '../../components/feedback/LoadingSkeleton';
 import InstallLMSButton from '../../pwa/InstallLMSButton';
+import UserAvatar from '../../components/user/UserAvatar';
 import { formatColomboDateTime } from '../../utils/colomboTime';
 
 export default function StudentDashboardPage() {
@@ -87,15 +88,29 @@ export default function StudentDashboardPage() {
       {/* ── 1. Hero Greeting Banner Card (Purple/Indigo Gradient + 3D Illustration) ── */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 p-5 text-white shadow-sm">
         <div className="relative z-10 flex items-center justify-between gap-4">
-          <div className="min-w-0">
-            <p className="text-xs font-medium text-blue-100">Welcome back,</p>
-            <h2 className="mt-0.5 text-xl font-extrabold tracking-tight text-white flex items-center gap-1.5">
-              <span>{displayName}</span>
-              <span className="text-lg">👋</span>
-            </h2>
-            <p className="mt-1 text-xs font-medium text-blue-100">
-              {displayGrade} • Active Learner
-            </p>
+          <div className="flex items-center gap-3.5 min-w-0">
+            <Link
+              to="/lms/security"
+              className="relative shrink-0 rounded-full transition-transform active:scale-95"
+              title="View Profile"
+            >
+              <UserAvatar
+                user={user}
+                size="lg"
+                ring={true}
+                ringColor="ring-white/40 shadow-md"
+              />
+            </Link>
+            <div className="min-w-0">
+              <p className="text-xs font-medium text-blue-100">Welcome back,</p>
+              <h2 className="mt-0.5 text-xl font-extrabold tracking-tight text-white flex items-center gap-1.5 truncate">
+                <span className="truncate">{displayName}</span>
+                <span className="text-lg shrink-0">👋</span>
+              </h2>
+              <p className="mt-0.5 text-xs font-medium text-blue-100 truncate">
+                {displayGrade} • Active Learner
+              </p>
+            </div>
           </div>
 
           {/* 3D Books & Pen Holder Graphic */}

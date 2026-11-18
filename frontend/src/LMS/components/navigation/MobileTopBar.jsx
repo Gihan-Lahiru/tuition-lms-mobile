@@ -1,8 +1,9 @@
-import { Bell, LogOut, Smartphone, Monitor, User } from 'lucide-react';
+import { Bell, LogOut, Smartphone, Monitor } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLMSAuth } from '../../context/LMSAuthContext';
 import InstallLMSButton from '../../pwa/InstallLMSButton';
 import LMSLogo from '../branding/LMSLogo';
+import UserAvatar from '../user/UserAvatar';
 
 export default function MobileTopBar({
   title = 'MW Tuition LMS',
@@ -59,11 +60,11 @@ export default function MobileTopBar({
               </Link>
               <Link
                 to="/lms/security"
-                className="rounded-full bg-white/15 p-2 hover:bg-white/25 active:scale-95 transition"
+                className="relative flex items-center justify-center rounded-full hover:opacity-90 active:scale-95 transition"
                 aria-label="Account Profile"
-                title="Account Profile"
+                title={user?.name || "Account Profile"}
               >
-                <User className="h-4 w-4" />
+                <UserAvatar user={user} size="sm" ring={true} ringColor="ring-white/40" />
               </Link>
               <button
                 type="button"

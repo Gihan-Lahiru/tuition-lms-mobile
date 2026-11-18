@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
 import {
   Lock,
@@ -9,11 +9,13 @@ import {
   Save,
   CheckCircle2,
   ShieldCheck,
+  Camera,
 } from 'lucide-react';
 import { messageService } from '../../services/messageService';
 import apiClient from '../../services/apiClient';
 import { useLMSAuth } from '../../context/LMSAuthContext';
 import InstallLMSButton from '../../pwa/InstallLMSButton';
+import UserAvatar from '../../components/user/UserAvatar';
 
 export default function AccountSecurityPage() {
   const { user, logout, refreshMe } = useLMSAuth();
@@ -30,6 +32,36 @@ export default function AccountSecurityPage() {
   // Password Form state
   const [pwdForm, setPwdForm] = useState({ currentPassword: '', newPassword: '' });
   const [savingPwd, setSavingPwd] = useState(false);
+
+  // Photo upload state
+  const fileInputRef = useRef(null);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file (PNG, JPG, WebP)');
+      return;
+    }
+    const formData = new FormData();
+    formData.append('profilePicture', file);
+    setUploadingPhoto(true);
+    try {
+      await apiClient.post('/users/profile-picture', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      if (refreshMe) {
+        await refreshMe();
+      }
+      toast.success('Profile photo updated successfully!');
+    } catch (err) {
+      toast.error(err?.response?.data?.message || 'Could not upload photo');
+    } finally {
+      setUploadingPhoto(false);
+      if (e.target) e.target.value = '';
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -74,9 +106,25 @@ export default function AccountSecurityPage() {
     <div className="space-y-4 p-4 antialiased">
       {/* Profile Overview Card */}
       <div className="rounded-3xl bg-gradient-to-br from-indigo-900 via-blue-900 to-slate-900 p-5 text-white shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 text-xl font-black text-white backdrop-blur-md">
-            {user?.name?.charAt(0) || 'U'}
+        <div className="flex items-center gap-4">
+          <div className="relative shrink-0">
+            <UserAvatar user={user} size="xl" ringColor="ring-white/40 shadow-lg" />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploadingPhoto}
+              className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-indigo-600 text-white shadow-md ring-2 ring-slate-900 hover:bg-indigo-500 active:scale-95 transition cursor-pointer disabled:opacity-50"
+              title="Change profile photo"
+            >
+              <Camera className="h-3.5 w-3.5" />
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handlePhotoUpload}
+            />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2">
