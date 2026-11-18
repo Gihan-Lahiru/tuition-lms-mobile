@@ -79,16 +79,19 @@ export default function StudentDashboardPage() {
   const pendingAssignments = data.assignments.filter((a) => !a.submission);
   const monthlyPct = data.attendance?.monthlySummary?.percentage ?? 0;
   const termAvg = data.resultsSummary?.termAveragePercentage;
+  const rawGrade = user?.grade || 'Grade 6';
+  const displayGrade = rawGrade.toString().toLowerCase().startsWith('grade')
+    ? rawGrade
+    : `Grade ${rawGrade}`;
   const displayName = user?.name || 'Gihan Lahiru';
-  const displayGrade = user?.grade || 'Grade 6';
   const completionRate = data.assignmentSummary?.completionRate ?? 0;
 
   return (
     <div className="space-y-4 p-4">
       {/* ── 1. Hero Greeting Banner Card (Purple/Indigo Gradient + 3D Illustration) ── */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 p-5 text-white shadow-sm">
-        <div className="relative z-10 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5 min-w-0">
+        <div className="relative z-10 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
             <Link
               to="/lms/security"
               className="relative shrink-0 rounded-full transition-transform active:scale-95"
@@ -101,41 +104,25 @@ export default function StudentDashboardPage() {
                 ringColor="ring-white/40 shadow-md"
               />
             </Link>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <p className="text-xs font-medium text-blue-100">Welcome back,</p>
-              <h2 className="mt-0.5 text-xl font-extrabold tracking-tight text-white flex items-center gap-1.5 truncate">
+              <h2 className="mt-0.5 text-lg sm:text-xl font-extrabold tracking-tight text-white flex items-center gap-1.5">
                 <span className="truncate">{displayName}</span>
-                <span className="text-lg shrink-0">👋</span>
+                <span className="text-base shrink-0">👋</span>
               </h2>
-              <p className="mt-0.5 text-xs font-medium text-blue-100 truncate">
+              <p className="mt-0.5 text-xs font-medium text-blue-100">
                 {displayGrade} • Active Learner
               </p>
             </div>
           </div>
 
-          {/* 3D Books & Pen Holder Graphic */}
-          <div className="shrink-0 w-28 h-20 relative flex items-center justify-end select-none pointer-events-none">
-            <svg viewBox="0 0 140 100" className="w-full h-full drop-shadow-md" fill="none" xmlns="http://www.w3.org/2000/svg">
-              {/* Soft Ambient Glow */}
-              <circle cx="85" cy="50" r="45" fill="rgba(255,255,255,0.12)" filter="blur(8px)" />
-              {/* Stacked Books */}
-              {/* Bottom Book */}
-              <rect x="15" y="68" width="85" height="15" rx="4" fill="#ffffff" />
-              <rect x="15" y="65" width="85" height="5" rx="2" fill="#3b82f6" />
-              {/* Middle Book */}
-              <rect x="25" y="52" width="75" height="13" rx="3" fill="#ffffff" />
-              <rect x="25" y="49" width="75" height="4" rx="2" fill="#8b5cf6" />
-              {/* Top Book (Purple Cover) */}
-              <rect x="35" y="38" width="65" height="11" rx="3" fill="#ffffff" />
-              <rect x="35" y="35" width="65" height="4" rx="2" fill="#6366f1" />
-              {/* Pencil Holder Cup */}
-              <rect x="100" y="42" width="30" height="42" rx="6" fill="#1e3a8a" />
-              <rect x="103" y="45" width="24" height="36" rx="4" fill="#2563eb" />
-              {/* Pencils inside cup */}
-              <line x1="108" y1="20" x2="108" y2="45" stroke="#fbbf24" strokeWidth="4" strokeLinecap="round" />
-              <line x1="116" y1="12" x2="116" y2="45" stroke="#f43f5e" strokeWidth="4" strokeLinecap="round" />
-              <line x1="123" y1="16" x2="123" y2="45" stroke="#38bdf8" strokeWidth="4" strokeLinecap="round" />
-            </svg>
+          {/* Real 3D Books & Pen Holder Graphic from Mockup */}
+          <div className="shrink-0 w-32 h-20 -mr-1.5 relative flex items-center justify-end select-none pointer-events-none">
+            <img
+              src="/lms/images/hero_books_3d.png"
+              alt="3D Study Books & Tools"
+              className="h-full w-auto max-w-none object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.25)] select-none"
+            />
           </div>
         </div>
       </div>
