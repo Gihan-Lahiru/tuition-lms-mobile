@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { Clock, CreditCard, LogOut } from 'lucide-react';
 import { useLMSAuth } from '../context/LMSAuthContext';
-import AppSplashScreen from '../components/feedback/AppSplashScreen';
+import LoadingSkeleton from '../components/feedback/LoadingSkeleton';
 
 export default function RouteGuard({
   children,
@@ -12,12 +12,7 @@ export default function RouteGuard({
   const location = useLocation();
 
   if (loading) {
-    return (
-      <AppSplashScreen
-        message="Verifying LMS session..."
-        progressText="Connecting to your mobile workspace"
-      />
-    );
+    return <LoadingSkeleton rows={4} />;
   }
 
   if (!user) {
