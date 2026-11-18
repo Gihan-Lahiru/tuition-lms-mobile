@@ -21,24 +21,28 @@ export default function InstallLMSButton({ compact = false }) {
   }
 
   return (
-    <button
-      type="button"
-      onClick={promptInstall}
-      className="flex w-full items-center justify-between rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 p-4 text-left text-white shadow-sm active:scale-[0.99] transition"
-    >
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20">
-          <Smartphone className="h-5 w-5" />
+    <div className="flex w-full items-center justify-between rounded-3xl bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 p-4 text-left text-white shadow-sm">
+      <div className="flex items-center gap-3 min-w-0 pr-2">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/20 backdrop-blur">
+          <Smartphone className="h-5 w-5 text-white" />
         </div>
-        <div>
-          <p className="text-sm font-bold">Install MW Tuition LMS App</p>
-          <p className="text-xs text-blue-100">
-            Open full-screen directly from your home screen
+        <div className="min-w-0">
+          <p className="truncate text-sm font-bold text-white">Install MW Tuition LMS App</p>
+          <p className="truncate text-[11px] text-blue-100">
+            Open full-screen directly from your home screen.
           </p>
         </div>
       </div>
-      <Download className="h-5 w-5 shrink-0" />
-    </button>
+      <button
+        type="button"
+        onClick={promptInstall}
+        className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-white px-3.5 py-1.5 text-xs font-bold text-indigo-700 shadow-sm hover:bg-blue-50 active:scale-95 transition cursor-pointer"
+        title="Install LMS App"
+      >
+        <Download className="h-3.5 w-3.5" />
+        <span>Install</span>
+      </button>
+    </div>
   );
 }
 

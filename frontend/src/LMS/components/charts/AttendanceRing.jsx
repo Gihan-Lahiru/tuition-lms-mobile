@@ -1,4 +1,4 @@
-export default function AttendanceRing({ percentage = 0, size = 84 }) {
+export default function AttendanceRing({ percentage = 0, size = 84, color }) {
   const stroke = 8;
   const radius = (size - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -6,7 +6,7 @@ export default function AttendanceRing({ percentage = 0, size = 84 }) {
   const offset = circumference - (clamped / 100) * circumference;
 
   const strokeColor =
-    clamped >= 75 ? '#10b981' : clamped >= 50 ? '#f59e0b' : '#ef4444';
+    color || (clamped >= 75 ? '#10b981' : clamped >= 50 ? '#f59e0b' : '#ef4444');
 
   return (
     <div
