@@ -36,7 +36,7 @@ export default function LMSLogo({
     glass: 'bg-white/20 backdrop-blur-md text-white border border-white/30 shadow-md',
   };
 
-  const imageToTry = customSrc || '/lms/icons/logo.svg';
+  const imageToTry = customSrc || '/lms/icons/logo.png';
 
   return (
     <div className={`inline-flex items-center gap-3 ${className}`}>

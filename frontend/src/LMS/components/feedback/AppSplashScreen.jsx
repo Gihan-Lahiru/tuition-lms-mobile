@@ -163,7 +163,7 @@ export default function AppSplashScreen({
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-80" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
             </span>
-            <span className="tracking-wide">MW Tuition Mobile Platform</span>
+            <span className="tracking-wide">MW Learn Mobile Platform</span>
           </div>
         </div>
 
@@ -173,54 +173,20 @@ export default function AppSplashScreen({
           {/* 3D Glass Icon Container */}
           <div className="relative mb-8 flex items-center justify-center">
             {/* Outer Diffuse Radiant Glow */}
-            <div className="absolute -inset-5 rounded-[40px] bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 opacity-70 blur-2xl animate-pulse" />
+            <div className="absolute -inset-6 rounded-[40px] bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 opacity-75 blur-2xl animate-pulse" />
             
-            {/* The 3D Glass Squircle Icon */}
-            <div className="relative flex h-28 w-28 sm:h-32 sm:w-32 flex-col items-center justify-center rounded-[30px] bg-gradient-to-br from-[#3b82f6]/95 via-[#4f46e5]/95 to-[#7c3aed]/95 p-3 shadow-[0_15px_35px_rgba(79,70,229,0.5),0_0_20px_rgba(59,130,246,0.4)] border border-white/30 backdrop-blur-md overflow-hidden">
-              
-              {/* Glossy Diagonal Top-Reflection */}
-              <div className="pointer-events-none absolute -top-8 -left-8 h-28 w-28 rounded-full bg-white/25 blur-lg" />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-black/20" />
-
-              {/* Graduation Cap & Open Book Crest */}
-              <svg
-                viewBox="0 0 64 64"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-14 w-14 sm:h-16 sm:w-16 text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]"
-              >
-                {/* Academic Cap diamond top */}
-                <path
-                  d="M32 12L52 22L32 32L12 22L32 12Z"
-                  fill="white"
-                />
-                {/* Tassel */}
-                <path
-                  d="M48 24.5V36C48 37 47 38 46 38"
-                  stroke="white"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                />
-                <circle cx="46" cy="38.5" r="1.5" fill="white" />
-                {/* Open Book Foundation */}
-                <path
-                  d="M18 31V43C22 41 27 41 32 44C37 41 42 41 46 43V31C42 29 37 29 32 32C27 29 22 29 18 31Z"
-                  fill="white"
-                  fillOpacity="0.9"
-                />
-              </svg>
-
-              {/* MW TUITION Text below emblem */}
-              <span className="mt-1 text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-white drop-shadow">
-                MW TUITION
-              </span>
-            </div>
+            {/* The 3D Master App Icon */}
+            <img
+              src="/lms/icons/logo.png"
+              alt="MW Learn"
+              className="relative h-28 w-28 sm:h-32 sm:w-32 object-contain drop-shadow-[0_20px_40px_rgba(79,70,229,0.6)] select-none pointer-events-none"
+            />
           </div>
 
-          {/* Title Row: MW TUITION + LMS Pill Badge */}
+          {/* Title Row: MW LEARN + LMS Pill Badge */}
           <div className="flex items-center justify-center gap-2.5">
             <span className="text-3xl sm:text-4xl font-black tracking-tight text-white drop-shadow-md">
-              MW TUITION
+              MW LEARN
             </span>
             <span className="rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-3.5 py-1 text-xl sm:text-2xl font-black tracking-wide text-white shadow-[0_0_20px_rgba(99,102,241,0.5)]">
               LMS

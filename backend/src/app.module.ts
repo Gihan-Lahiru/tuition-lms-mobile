@@ -13,6 +13,7 @@ import { SeedService } from './common/services/seed.service';
 import { PdfWatermarkService } from './common/services/pdf-watermark.service';
 import { InitLmsSchema1731400000000 } from './database/migrations/1731400000000-InitLmsSchema';
 import { AddMultipleChoiceQuizSupport1731450000000 } from './database/migrations/1731450000000-AddMultipleChoiceQuizSupport';
+import { AddPushSubscriptions1731500000000 } from './database/migrations/1731500000000-AddPushSubscriptions';
 
 import { User } from './database/entities/user.entity';
 import { Class } from './database/entities/class.entity';
@@ -37,6 +38,7 @@ import {
   AttendanceSession,
 } from './database/entities/attendance.entity';
 import { Message } from './database/entities/message.entity';
+import { PushSubscription } from './database/entities/push-subscription.entity';
 
 const ALL_ENTITIES = [
   User,
@@ -48,6 +50,7 @@ const ALL_ENTITIES = [
   Video,
   Payment,
   Notification,
+  PushSubscription,
   Announcement,
   Message,
   Quiz,
@@ -64,6 +67,7 @@ const ALL_ENTITIES = [
 const ALL_MIGRATIONS = [
   InitLmsSchema1731400000000,
   AddMultipleChoiceQuizSupport1731450000000,
+  AddPushSubscriptions1731500000000,
 ];
 
 @Module({
