@@ -3,37 +3,50 @@ import { ShieldCheck, Sparkles, GraduationCap } from 'lucide-react';
 import LMSLogo from '../branding/LMSLogo';
 
 export default function AppSplashScreen({
-  durationMs = 1200,
+  durationMs = 2600,
   onComplete,
 }) {
-  const [progress, setProgress] = useState(15);
+  const [progress, setProgress] = useState(8);
+  const [isFadingOut, setIsFadingOut] = useState(false);
 
-  // Smooth, snappy progress animation from 15% to 100%
+  // Smooth, realistic progress animation over durationMs
   useEffect(() => {
     const startTime = Date.now();
     const interval = setInterval(() => {
       const elapsed = Date.now() - startTime;
-      const pct = Math.min(100, Math.round(15 + (elapsed / durationMs) * 85));
+      const t = Math.min(1, elapsed / durationMs);
+      // Ease-out cubic curve for natural, satisfying motion
+      const eased = 1 - Math.pow(1 - t, 3);
+      const pct = Math.min(100, Math.round(8 + eased * 92));
       setProgress(pct);
-      if (pct >= 100) {
+
+      if (t >= 1) {
         clearInterval(interval);
-        if (onComplete) onComplete();
+        setIsFadingOut(true);
+        setTimeout(() => {
+          if (onComplete) onComplete();
+        }, 280);
       }
-    }, 30);
+    }, 25);
 
     return () => clearInterval(interval);
   }, [durationMs, onComplete]);
 
   // Context-aware micro-status
   const getStatusText = () => {
-    if (progress < 40) return 'Connecting to MW Tuition Network...';
-    if (progress < 75) return 'Loading papers, timed quizzes & notes...';
-    if (progress < 95) return 'Setting up your student dashboard...';
+    if (progress < 25) return 'Initializing MW Tuition Portal...';
+    if (progress < 50) return 'Loading past papers, model papers & notes...';
+    if (progress < 75) return 'Syncing timed MCQ quiz banks...';
+    if (progress < 92) return 'Preparing your personalized dashboard...';
     return 'Welcome back! Launching workspace...';
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#070b14] font-sans antialiased select-none overflow-hidden">
+    <div
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#070b14] font-sans antialiased select-none overflow-hidden transition-all duration-300 ${
+        isFadingOut ? 'opacity-0 scale-[0.98] pointer-events-none' : 'opacity-100 scale-100'
+      }`}
+    >
       {/* Dynamic Cosmic Aura Background */}
       <div className="pointer-events-none absolute -top-28 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-blue-600/20 blur-[110px] animate-pulse" />
       <div className="pointer-events-none absolute top-1/2 left-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-600/25 blur-[120px]" />

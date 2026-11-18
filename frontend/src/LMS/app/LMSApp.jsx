@@ -25,7 +25,7 @@ export default function LMSApp() {
     <BrowserRouter>
       <LMSProviders>
         {booting ? (
-          <AppSplashScreen durationMs={1200} onComplete={handleComplete} />
+          <AppSplashScreen durationMs={2600} onComplete={handleComplete} />
         ) : (
           <LMSRoutes />
         )}
