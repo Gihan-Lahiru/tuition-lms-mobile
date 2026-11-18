@@ -46,14 +46,15 @@ export default function UserAvatar({
           className="h-full w-full object-cover rounded-full"
           loading="lazy"
         />
-      ) : initial ? (
-        <div className="flex h-full w-full items-center justify-center bg-gradient-to-tr from-indigo-600 via-blue-600 to-purple-600 text-white shadow-inner">
-          <span>{initial}</span>
-        </div>
       ) : (
-        <div className="flex h-full w-full items-center justify-center bg-white/20 text-white backdrop-blur">
-          <User className="h-1/2 w-1/2" />
-        </div>
+        <img
+          src="/lms/images/default_student_avatar.png"
+          alt="Student Profile"
+          onError={(e) => {
+            e.currentTarget.style.display = 'none';
+          }}
+          className="h-full w-full object-cover rounded-full"
+        />
       )}
     </div>
   );

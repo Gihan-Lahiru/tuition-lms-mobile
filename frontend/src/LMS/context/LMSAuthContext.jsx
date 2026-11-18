@@ -19,9 +19,17 @@ export function LMSAuthProvider({ children }) {
       return null;
     }
     try {
-      const res = await apiClient.get('/auth/me');
-      setUser(res.data);
-      return res.data;
+      // First try /users/profile to get complete user data including profilePicture
+      let userData = null;
+      try {
+        const pRes = await apiClient.get('/users/profile');
+        userData = pRes.data?.user || pRes.data;
+      } catch {
+        const res = await apiClient.get('/auth/me');
+        userData = res.data?.user || res.data;
+      }
+      setUser(userData);
+      return userData;
     } catch {
       clearLmsToken();
       setUser(null);
@@ -54,8 +62,13 @@ export function LMSAuthProvider({ children }) {
   const login = async (email, password, remember = true) => {
     const res = await apiClient.post('/auth/login', { email, password });
     setLmsToken(res.data.token, remember);
-    setUser(res.data.user);
-    return res.data.user;
+    let fullUser = res.data.user;
+    try {
+      const pRes = await apiClient.get('/users/profile');
+      fullUser = pRes.data?.user || pRes.data || fullUser;
+    } catch {}
+    setUser(fullUser);
+    return fullUser;
   };
 
   const register = async (payload) => {
