@@ -33,8 +33,19 @@ export function clearLmsToken() {
   }
 }
 
+const isLocalEnv = typeof window !== 'undefined' && (
+  window.location.hostname === 'localhost' ||
+  window.location.hostname === '127.0.0.1' ||
+  window.location.hostname.startsWith('172.') ||
+  window.location.hostname.startsWith('192.168.')
+);
+
+const defaultBaseUrl = isLocalEnv
+  ? '/api'
+  : 'https://tutionproject-backendv2-qpji.vercel.app/api';
+
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: import.meta.env.VITE_API_URL || defaultBaseUrl,
   timeout: 20000,
 });
 
